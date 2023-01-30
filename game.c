@@ -72,34 +72,82 @@ void startEngine(int highScore, struct user firstUser) {
 	char userInput;
 	int jumping=-1;
     bool fire=FALSE;
-    clear();
+	/**
+	 \fn clear()
+	 \brief Questa funzione pulisce la schermata
+	*/
+
+	clear()
+	
 	nodelay(stdscr, TRUE);
+	/**
+	 \fn init_pair(1,COLOR_WHITE,COLOR_BLACK);
+	 \fn init_pair(4,COLOR_BLUE,COLOR_BLACK);
+	 \fn init_pair(5,COLOR_GREEN,COLOR_BLACK);
+	 \fn init_pair(6,COLOR_YELLOW,COLOR_BLACK);
+	 \brief Qui si determinano i colori del gioco
+	*/
+
   	init_pair(1,COLOR_WHITE,COLOR_BLACK);
 	init_pair(4,COLOR_BLUE,COLOR_BLACK);
 	init_pair(5,COLOR_GREEN,COLOR_BLACK);
 	init_pair(6,COLOR_YELLOW,COLOR_BLACK);
-	while (gameStatus == 1) {
+	/**
+	 \fn while (gameStatus == 1)
+	 \brief Questo e' un ciclo while che cicla fintanto che gameStatus e' 1
+	 \param gameStatus: valore in cui si cicla
+	 \return gameStatus: il valore di gameStatus
+	*/
+
+	while (gameStatus == 1)
+	{
 		userInput = getch();
-		// Show day or night
+		/**
+		 \fn if((score/50)%2 != 0)
+		 \brief In questo if si verifica se bisogna passare alla notte e far salire la luna
+		 \return score: il valore di score
+		*/
+
 		if((score/50)%2 != 0) {
 			moon(10, (maxX/2)-10);
 		}
+		/**
+		 \fn else
+		 \brief In questo else si verificano condizioni in caso non rispettino quelle del primo if e passare al giorno e far salire il sole
+		*/
+
 		else {
 			attron(COLOR_PAIR(1));
 			sun(10, (maxX/2)-10);			
 		}
-		// clear arrow
+		// Clear arrow
+		/**
+		 \fn if (fire)
+		 \brief In questo if si verifica se fire e' "TRUE"
+		*/
+
 		if (fire) {
 			mvprintw(arrowY, arrowX-2, " ");
 		}
 
 		score++;
         // Show informations
+		/**
+		 \fn mvprintw(1, 6, "%s %s %s", firstUser.name, firstUser.lastName, firstUser.age)
+		 \brief Questo mvprintw permette di visualizzare le informazioni del giocatore
+		 \return mvprintw: stampa a schermo le informazioni utente
+		*/
+
 		mvprintw(1, 6, "%s %s %s", firstUser.name, firstUser.lastName, firstUser.age);
 		mvprintw(1, getmaxx(stdscr)-9, "%d:%d", highScore, score);
 		// Use prize to destroy cactus
 		prize = computePrize(score, usedPrize);
 		mvprintw(3, 6, "Prize: %d    ", prize);
+		/**
+		 \fn if (prize == 1)
+		 \brief In questo if si verifica se e' possibile distruggere i cactus usando "prize"
+		*/
+		
 		if (prize == 1) {
 			if (userInput == 'k') {
 				usedPrize++;
